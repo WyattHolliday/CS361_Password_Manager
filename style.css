@@ -1,0 +1,191 @@
+body {
+    font-family: system-ui;
+}
+
+header {
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: #fff;
+}
+
+header a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.header-logo-container {
+    margin-right: 35px;
+    margin-left: 35px;
+}
+
+.content {
+    display: flex;
+}
+
+.side-content {
+    display: flex;
+}
+
+.side-bar {
+    background-color: lightgray;
+}
+
+.clickable:hover {
+    cursor: pointer;
+}
+
+.side-bar-item {
+    width: 120px;
+    height: 107px;
+    display: flex;
+    flex-direction: column;
+    border: black;
+    border-top-style: solid;
+    border-width: 1px;
+}
+
+.side-bar-item-text {
+    text-align: center;
+    margin: 5px;
+    font-size: smaller;
+    font-weight: 500;
+}
+
+.side-bar-image-holder {
+    align-self: center;
+    margin-top: 10px;
+}
+
+.side-bar-image-holder img {
+    max-width: 80px;
+    max-height: 65px;
+}
+
+.slideout-page {
+    width: 300px;
+    height: 100%;
+    background-color: whitesmoke;
+    border: solid black 1px;
+}
+
+/* #account-slideout {
+    display: flex;
+    flex-direction: column;
+}
+
+.slideout-text {
+    align-self: center;
+}
+
+#account-slideout img {
+    align-self: center;
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+}
+
+#account-slideout div {
+    align-self: center;
+}
+
+.account-button {
+    align-self: center;
+    width: 65%;
+    height: 30px;
+    margin-bottom: 15px;
+}
+
+.slideout-profile-subcontainer {
+    display: flex;
+}
+
+.slideout-edit-button {
+    margin: 10px;
+    height: 25px;
+    align-self: center;
+} */
+
+.main-display {
+    width: -webkit-fill-available;
+}
+
+.display-search-bar-container {
+    display: flex;
+    width: -webkit-fill-available;
+    height: 30px;
+}
+
+.search-bar-button {
+    height: 40px;
+    width: 100px;
+    border-radius: 0%;
+    font-size: initial;
+}
+
+.search-bar-button:hover {
+    background-color: lightgray;
+}
+
+.search-bar-button:active {
+    background-color: whitesmoke;
+}
+
+.search-bar {
+    height: 35px;
+    width: -webkit-fill-available;
+    border-radius: 0%;
+    border-color: black;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    font-size: larger;
+}
+
+.account-instance-container {
+    background-color: whitesmoke;
+    display: flex;
+    margin: 25px;
+    max-height: 100px;
+    padding: 10px;
+    border: solid;
+    border-radius: 5px;
+}
+
+.account-inst-img-container img {
+    max-width: 90px;
+    max-height: 90px;
+    border-radius: 10px;
+    border: solid gray;
+    margin-right: 35px;
+}
+
+.account-inst-text-container {
+    width: -webkit-fill-available;
+}
+
+.inst-text {
+    margin-top: 0px;
+    margin-bottom: 5px;
+    font-size: x-large;
+}
+
+#inst-website {
+    font-weight: bold;
+}
+
+.account-inst-button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-right: 10px;
+}
+
+.acc-inst-button {
+    height: 30px;
+    width: 70px;
+}
+
+.hidden {
+    display: none;
+}

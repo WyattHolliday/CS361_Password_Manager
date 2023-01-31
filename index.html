@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Password Manager</title>
+
+        <link rel="stylesheet" href="style.css">
+        <script src="index.js"></script>
+    </head>
+    <body>
+        <header>
+            <div class="header-logo-container">
+                <img src="" alt="Logo">
+            </div>
+            <h1 class="site-title"><a href="#">Password manager</a></h1>
+        </header>
+        <main class="content">
+            <div class="side-content">
+                <div class="side-bar">
+                    <div class="side-bar-item clickable" id="account-item">
+                        <div class="side-bar-image-holder">
+                            <img src="photos/default_acc_pfp.jpg" alt="account image">
+                        </div>
+                        <p class="side-bar-item-text">account</p>
+                    </div>
+                    <div class="side-bar-item clickable" id="create-item">
+                        <div class="side-bar-image-holder">
+                            <img src="photos/plus.jpg" alt="create password image">
+                        </div>
+                        <p class="side-bar-item-text">create password</p>
+                    </div>
+                    <div class="side-bar-item clickable" id="sort-item">
+                        <div class="side-bar-image-holder">
+                            <img src="photos/filing_cabinet.jpg" alt="sorting image">
+                        </div>
+                        <p class="side-bar-item-text">sort</p>
+                    </div>
+                    <div class="side-bar-item clickable" id="customize-item">
+                        <div class="side-bar-image-holder">
+                            <img src="photos/paint_palette.jpg" alt="customize image">
+                        </div>
+                        <p class="side-bar-item-text">customize</p>
+                    </div>
+                    <div class="side-bar-item clickable" id="settings-item">
+                        <div class="side-bar-image-holder">
+                            <img src="photos/gear.jpg" alt="settings image">
+                        </div>
+                        <p class="side-bar-item-text">settings</p>
+                    </div>
+                    <div class="side-bar-item clickable" id="support-item">
+                        <div class="side-bar-image-holder">
+                            <img src="photos/phone.jpg" alt="support image">
+                        </div>
+                        <p class="side-bar-item-text">contact support</p>
+                    </div>
+                </div>
+                <div id="sideouts-container">
+                    <div class="slideout-page hidden" id="account-slideout">
+                        <p class="slideout-text">photo</p>
+                        <img class="clickable" src="" alt="insert profile photo">
+                        <div class="slideout-profile-subcontainer">
+                            <p class="slideout-text">username: Username</p>
+                            <button class="slideout-edit-button clickable">edit</button>
+                        </div>
+                        <div class="slideout-profile-subcontainer">
+                            <p class="slideout-text">password: ********</p>
+                            <button class="slideout-edit-button clickable">edit</button>
+                        </div>
+                        <button class="account-button clickable">Switch Accounts</button>
+                        <button class="account-button clickable">Logout</button>
+                        <button class="account-button clickable">Delete</button>
+                    </div>
+
+                    <div class="slideout-page hidden" id="create-slideout">
+                        <div class="create-ask-container" id="create-address">
+                            <p class="create-text">Website Address</p>
+                            <input type="text" class="create-text-input">
+                        </div>
+                        <div class="create-ask-container" id="create-photo">
+                            <p class="create-text">photo</p>
+                            <img class="create-photo-image" src="" alt="photo">
+                        </div>
+                        <div class="create-ask-container" id="create-username">
+                            <p class="create-photo-text">username</p>
+                            <input type="text" class="create-text-input">
+                        </div>
+                        <div class="create-ask-container" id="create-password">
+                            <p class="create-photo-text">password</p>
+                            <input type="text" class="create-text-input">
+                        </div>
+                        <div class="create-ask-container" id="create-confirm-password">
+                            <p class="create-photo-text">password</p>
+                            <input type="text" class="create-text-input">
+                        </div>
+                        <button id="create-gen-password">generate password</button>
+                        <input type="text" class="create-text-input" id="create-notes" placeholder="notes">
+                    </div>
+
+                    <div class="slideout-page hidden" id="sort-slideout">
+                        <div id="sort-specific">
+                            <h3 class="sort-header">Specific Sorting</h3>
+                            <div class="sort-checkbox-container">
+                                <input type="checkbox" name="sort-checkboxes" id="sort-all">
+                                <label for="sort-all">all</label>
+                                <input type="text" class="sort-text">
+                            </div>
+                            <div class="sort-checkbox-container">
+                                <input type="checkbox" name="sort-checkboxes" id="sort-email">
+                                <label for="sort-all">email</label>
+                                <input type="text" class="sort-text">
+                            </div>
+                            <div class="sort-checkbox-container">
+                                <input type="checkbox" name="sort-checkboxes" id="sort-username">
+                                <label for="sort-all">username</label>
+                                <input type="text" class="sort-text">
+                            </div>
+                            <div class="sort-checkbox-container">
+                                <input type="checkbox" name="sort-checkboxes" id="sort-tag">
+                                <label for="sort-all">tag</label>
+                                <input type="text" class="sort-text">
+                            </div>
+                        </div>
+                        <div id="sort-type">
+                            <h3 class="sort-header">General Sorting</h3>
+                            <div class="sort-checkbox-container">
+                                <input type="checkbox" name="sort-checkboxes" id="sort-alph">
+                                <label for="sort-alph">alphabetical</label>
+                            </div>
+                            <div class="sort-checkbox-container">
+                                <input type="checkbox" name="sort-checkboxes" id="sort-date">
+                                <label for="sort-alph">date added</label>
+                            </div>
+                            <div class="sort-checkbox-container">
+                                <input type="checkbox" name="sort-checkboxes" id="sort-used">
+                                <label for="sort-alph">last used</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slideout-page hidden" id="customize-slideout"></div>
+                    <div class="slideout-page hidden" id="settings-slideout"></div>
+                    <div class="slideout-page hidden" id="support-slideout"></div>
+                </div>
+            </div>
+
+            <div class="main-display">
+                <div class="display-search-bar-container">
+                    <button class="search-bar-button clickable" id="clear-search-button">clear</button>
+                    <input type="text" name="search" class="search-bar" placeholder="Search">
+                    <button class="search-bar-button clickable" id="search-button">go</button>
+                </div>
+                <div class="display-accounts-container">
+                    <div class="account-instance-container">
+                        <div class="account-inst-img-container">
+                            <img src="photos/website.jpg" alt="Photo">
+                        </div>
+                        <div class="account-inst-text-container">
+                            <p class="inst-text" id="inst-website">www.website.com</p>
+                            <p class="inst-text" id="inst-username">Username</p>
+                            <p class="inst-text" id="inst-password">********</p>
+                        </div>
+                        <div class="account-inst-button-container">
+                            <button class="acc-inst-button clickable" id="acc-inst-edit-button">edit</button>
+                            <button class="acc-inst-button clickable" id="acc-inst-delete-button">delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
