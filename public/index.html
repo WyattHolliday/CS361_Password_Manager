@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Password Manager</title>
+
+        <link rel="stylesheet" href="style.css">
+        <script src="index.js"></script>
+    </head>
+    <body>
+        <header>
+            <div class="header-logo-container">
+                <img src="" alt="Logo">
+            </div>
+            <h1 class="site-title"><a href="#">Password manager</a></h1>
+        </header>
+        <main class="content">
+            <div class="side-content">
+                <div class="side-bar">
+                    <div class="side-bar-item clickable" id="account-item">
+                        <div class="side-bar-image-holder">
+                            <img class="side-profile-image" src="default_acc_pfp.jpg" alt="account image">
+                        </div>
+                        <p class="side-bar-item-text">account</p>
+                    </div>
+                    <div class="side-bar-item clickable" id="create-item">
+                        <div class="side-bar-image-holder">
+                            <img src="plus.jpg" alt="create password image">
+                        </div>
+                        <p class="side-bar-item-text">create password</p>
+                    </div>
+                    <div class="side-bar-item clickable" id="sort-item">
+                        <div class="side-bar-image-holder">
+                            <img src="filing_cabinet.jpg" alt="sorting image">
+                        </div>
+                        <p class="side-bar-item-text">sort</p>
+                    </div>
+                    <div class="side-bar-item clickable" id="customize-item">
+                        <div class="side-bar-image-holder">
+                            <img src="paint_palette.jpg" alt="customize image">
+                        </div>
+                        <p class="side-bar-item-text">customize</p>
+                    </div>
+                    <div class="side-bar-item clickable" id="settings-item">
+                        <div class="side-bar-image-holder">
+                            <img src="gear.jpg" alt="settings image">
+                        </div>
+                        <p class="side-bar-item-text">settings</p>
+                    </div>
+                    <div class="side-bar-item clickable" id="support-item">
+                        <a id="support-link" href="https://passwordmanger/support" target="_blank"></a>
+                        <div class="side-bar-image-holder">
+                            <img src="phone.jpg" alt="support image">
+                        </div>
+                        <p class="side-bar-item-text">contact support</p>
+                    </div>
+                </div>
+                <div id="slideouts-container">
+                    <div class="slideout-page hidden" id="account-slideout">
+                        <p class="slideout-text">Photo</p>
+                        <div class="slideout-image-container">
+                            <img class="slideout-image clickable" src="camera.jpg" alt="insert profile photo">
+                        </div>
+                        <div class="slideout-profile-subcontainer">
+                            <p class="slideout-text">Username: Username</p>
+                            <button class="slideout-edit-button clickable">edit</button>
+                        </div>
+                        <div class="slideout-profile-subcontainer">
+                            <p class="slideout-text">Password: ********</p>
+                            <button class="slideout-edit-button clickable">Edit</button>
+                        </div>
+                        <button class="slideout-button clickable">Switch Accounts</button>
+                        <button class="slideout-button clickable">Logout</button>
+                        <button class="slideout-button clickable">Delete</button>
+                    </div>
+
+                    <div class="slideout-page hidden" id="create-slideout">
+                        <div class="create-ask-container" id="create-address">
+                            <p class="create-text">Website Address</p>
+                            <input type="text" class="create-text-input">
+                        </div>
+                        <div class="create-ask-container" id="create-photo">
+                            <p class="create-text">Photo</p>
+                            <div class="slideout-image-container">
+                                <img class="slideout-image clickable" src="website.jpg" alt="photo">
+                            </div>
+                        </div>
+                        <div class="create-ask-container" id="create-username">
+                            <p class="create-text">Username</p>
+                            <input type="text" class="create-text-input">
+                        </div>
+                        <div class="create-ask-container" id="create-password">
+                            <p class="create-text">Password</p> 
+                            <!-- use imput tpye password -->
+                            <input type="text" class="create-text-input">
+                        </div>
+                        <div class="create-ask-container" id="create-confirm-password">
+                            <p class="create-text">Password</p>
+                            <input type="text" class="create-text-input" id="create-password-input">
+                        </div>
+                        <button class="slideout-button clickable" id="create-gen-password">Generate password</button>
+                        <input type="text" class="create-text-input create-notes" id="create-notes" placeholder="notes">
+                    </div>
+
+                    <div class="slideout-page hidden" id="sort-slideout">
+                        <div class="sort-sub-container" id="sort-specific">
+                            <h3 class="sort-header">Specific Sorting</h3>
+                            <div class="sort-checkbox-container">
+                                <input type="checkbox" name="sort-checkboxes" id="sort-all" class="clickable">
+                                <label class="sort-label" for="sort-all">all</label>
+                                <input type="text" class="sort-text">
+                            </div>
+                            <div class="sort-checkbox-container">
+                                <input type="checkbox" name="sort-checkboxes" id="sort-email" class="clickable">
+                                <label class="sort-label" for="sort-all">email</label>
+                                <input type="text" class="sort-text">
+                            </div>
+                            <div class="sort-checkbox-container">
+                                <input type="checkbox" name="sort-checkboxes" id="sort-username" class="clickable">
+                                <label class="sort-label" for="sort-all">username</label>
+                                <input type="text" class="sort-text">
+                            </div>
+                            <div class="sort-checkbox-container">
+                                <input type="checkbox" name="sort-checkboxes" id="sort-tag" class="clickable">
+                                <label class="sort-label" for="sort-all">tag</label>
+                                <input type="text" class="sort-text">
+                            </div>
+                        </div>
+                        <div class="sort-sub-container" id="sort-type">
+                            <h3 class="sort-header">General Sorting</h3>
+                            <div class="sort-checkbox-container">
+                                <input type="radio" name="sort-checkboxes" id="sort-alph" class="clickable">
+                                <label class="sort-label" for="sort-alph">alphabetical</label>
+                            </div>
+                            <div class="sort-checkbox-container">
+                                <input type="radio" name="sort-checkboxes" id="sort-date" class="clickable">
+                                <label class="sort-label" for="sort-alph">date added</label>
+                            </div>
+                            <div class="sort-checkbox-container">
+                                <input type="radio" name="sort-checkboxes" id="sort-used" class="clickable">
+                                <label class="sort-label" for="sort-alph">last used</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slideout-page cust-slideout hidden" id="customize-slideout">
+                        <div class="cust-sub-container cust-add-slot-container">
+                            <div class="cust-indv-add-container">
+                                <h3 class="cust-text">Add Text Slot</h3>
+                                <div class="cust-input-bar-container">
+                                    <input type="text" class="cust-input" id="cust-input-text" placeholder="name">
+                                    <button class="cust-input-button clickable">add</button>
+                                </div>
+                            </div>
+                            <div class="cust-indv-add-container">
+                                <h3 class="cust-text">Add Tag Slot</h3>
+                                <div class="cust-input-bar-container">
+                                    <input type="text" class="cust-input" id="cust-input-tag" placeholder="name">
+                                    <button class="cust-input-button clickable">add</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cust-sub-container cust-display-container">
+                            <h3 class="cust-text">Display</h3>
+                            <div class="cust-display-checks-container">
+                                <div class="cust-checkbox-container">
+                                    <input type="checkbox" name="cust-checkboxes" id="cust-username" class="clickable">
+                                    <label for="cust-username">Display Username</label>
+                                </div>
+                            </div>
+                            <div class="cust-display-checks-container">
+                                <div class="cust-checkbox-container">
+                                    <input type="checkbox" name="cust-checkboxes" id="cust-password" class="clickable">
+                                    <label for="cust-password">Display Password</label>
+                                </div>
+                            </div>
+                            <div class="cust-display-checks-container">
+                                <div class="cust-checkbox-container">
+                                    <input type="checkbox" name="cust-checkboxes" id="cust-characters" class="clickable">
+                                    <label for="cust-characters">Password Characters</label>
+                                </div>
+                            </div>
+                            <div class="cust-display-checks-container">
+                                <div class="cust-checkbox-container">
+                                    <input type="checkbox" name="cust-checkboxes" id="cust-email" class="clickable">
+                                    <label for="cust-email">Display Email</label>
+                                </div>
+                            </div>
+                            <div class="cust-display-checks-container">
+                                <div class="cust-checkbox-container">
+                                    <input type="checkbox" name="cust-checkboxes" id="cust-tags" class="clickable">
+                                    <label for="cust-tags">Display Tags</label>
+                                </div>
+                            </div>
+                            <div class="cust-display-checks-container">
+                                <div class="cust-checkbox-container">
+                                    <input type="checkbox" name="cust-checkboxes" id="cust-fields" class="clickable">
+                                    <label for="cust-fields">Display Fields</label>
+                                </div>
+                            </div>
+                            <div class="cust-display-checks-container">
+                                <div class="cust-checkbox-container">
+                                    <input type="checkbox" name="cust-checkboxes" id="cust-photos" class="clickable">
+                                    <label for="cust-photos">Display Photos</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cust-sub-container cust-themes">
+                            <h3 class="cust-text">Themes</h3>
+                            <div class="cust-theme-checks-container">
+                                <div class="cust-checkbox-container">
+                                    <input type="radio" name="cust-checkboxes" id="cust-night" class="clickable">
+                                    <label for="cust-night">Night Theme</label>
+                                </div>
+                            </div>
+                            <div class="cust-theme-checks-container">
+                                <div class="cust-checkbox-container">
+                                    <input type="radio" name="cust-checkboxes" id="cust-light" class="clickable">
+                                    <label for="cust-light">Light Theme</label>
+                                </div>
+                            </div>
+                            <div class="cust-theme-checks-container">
+                                <div class="cust-checkbox-container">
+                                    <input type="radio" name="cust-checkboxes" id="cust-red" class="clickable">
+                                    <label for="cust-red">Red Theme</label>
+                                </div>
+                            </div>
+                            <div class="cust-theme-checks-container">
+                                <div class="cust-checkbox-container">
+                                    <input type="radio" name="cust-checkboxes" id="cust-blue" class="clickable">
+                                    <label for="cust-blue">Blue Theme</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cust-sub-container">
+                            <button class="slideout-button clickable" id="cust-change">Apply Changes</button>
+                            <button class="slideout-button clickable" id="cust-cancel">Cancel</button>
+                        </div>
+                    </div>
+                    <div class="slideout-page hidden" id="settings-slideout">
+                        <div class="settings-sub-container">
+                            <h3 class="settings-text">Active Time</h3>
+                            <div class="settings-time-container">
+                                <div class="settings-time">
+                                    <!-- input type time -->
+                                    <input type="text" class="settings-time-input" id="settings-start-time" placeholder="0:00">
+                                    <p class="settings-time-dash">-</p>
+                                    <input type="text" class="settings-time-input" id="settings-end-time" placeholder="0:00">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-sub-container">
+                            <h3 class="settings-text">Keep Deleted Accounts</h3>
+                            <div class="settings-dropdown-container">
+                                <h3 class="settings-sub-text">for</h3>
+                                <select name="settings-select" class="settings-select clickable">
+                                    <option>None</option>
+                                    <option>1 hour</option>
+                                    <option>1 day</option>
+                                    <option>3 days</option>
+                                    <option selected value="">1 week</option>
+                                    <option>2 weeks</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="settings-sub-container">
+                            <h3 class="settings-text">Save last</h3>
+                            <div class="settings-dropdown-container">
+                                <select name="settings-edits-ammount" class="settings-select settings-edits-ammount clickable">
+                                    <option>5</option>
+                                    <option selected value="">10</option>
+                                    <option>20</option>
+                                    <option>30</option>
+                                </select>
+                                <h3 class="settings-sub-text">edits</h3>
+                            </div>
+                        </div>
+                        <div class="settings-sub-container settings-button-container">
+                                <button class="slideout-button clickable" id="setttings-change">Apply Changes</button>
+                                <button class="slideout-button clickable" id="settings-cancel">Cancel</button>
+                        </div>
+                        <div class="settings-sub-container settings-button-container">
+                                <button class="slideout-button clickable" id="settings-deactivate">Deactivate</button>
+                                <button class="slideout-button clickable" id="settings-uninstall">Uninstall</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-display">
+                <div class="display-search-bar-container">
+                    <button class="search-bar-button clickable" id="clear-search-button">clear</button>
+                    <input type="text" name="search" class="search-bar" placeholder="Search">
+                    <button class="search-bar-button clickable" id="search-button">go</button>
+                </div>
+                <div class="display-accounts-container">
+                    <div class="account-instance-container">
+                        <div class="account-inst-img-container">
+                            <img src="website.jpg" alt="Photo">
+                        </div>
+                        <div class="account-inst-text-container">
+                            <p class="inst-text" id="inst-website">www.website.com</p>
+                            <p class="inst-text" id="inst-username">Username</p>
+                            <p class="inst-text" id="inst-password">********</p>
+                        </div>
+                        <div class="account-inst-button-container">
+                            <button class="acc-inst-button clickable" id="acc-inst-edit-button">edit</button>
+                            <button class="acc-inst-button clickable" id="acc-inst-delete-button">delete</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="account-edit-container hidden">
+                    <div class="edit-sub-container edit-website">
+                        <img class="edit-website-img" src="website.jpg" alt="photo">
+                        <input class="edit-website-url" id="edit-url" type="text">
+                    </div>
+                    <div class="edit-sub-container edit-userinfo">
+                        <input class="edit-userinfo-input" id="edit-user-username" type="text">
+                        <input class="edit-userinfo-input" id="edit-user-password" type="text">
+                        <input class="edit-userinfo-input" id="edit-user-email" type="text">
+                    </div>
+                    <div class="edit-sub-container edit-fields">
+                        <h3 class="edit-header">Fields</h3>
+                        <div class="edit-fields-container edit-container-scroll">
+                            <div class="edit-field">
+                                <p class="edit-text">Example</p>
+                                <input type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="edit-sub-container edit-end">
+                        <div class="edit-tags">
+                            <h3 class="edit-header">Tags</h3>
+                            <div class="edit-tags-container edit-container-scroll">
+                                <p class="edit-text">Example</p>
+                                <select name="edit-tags-select" class="edit-tags-select clickable">
+                                    <option selected value="">Ex</option>
+                                    <option>Ex 2</option>
+                                    <option>Ex 3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="edit-button clickable" id="edit-revert">Undo</button>
+                    </div>
+                    <div class="edit-subcontainer edit-end">
+                        <div class="edit-notes-container">
+                            <h3 class="edit-header">Notes</h3>
+                            <input class="edit-notes" type="text" placeholder="None">
+                        </div>
+                        <button class="edit-button">Save</button>
+                    </div>
+                    <p class="edit-close clickable">X</p>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
