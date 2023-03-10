@@ -77,7 +77,7 @@
                     <div class="slideout-page hidden" id="create-slideout">
                         <div class="create-ask-container" id="create-address">
                             <p class="create-text">Website Address</p>
-                            <input type="text" class="create-text-input">
+                            <input type="text" class="create-text-input" id="create-address-input">
                         </div>
                         <div class="create-ask-container" id="create-photo">
                             <p class="create-text">Photo</p>
@@ -87,19 +87,20 @@
                         </div>
                         <div class="create-ask-container" id="create-username">
                             <p class="create-text">Username</p>
-                            <input type="text" class="create-text-input">
+                            <input type="text" class="create-text-input" id="create-username-input">
                         </div>
                         <div class="create-ask-container" id="create-password">
                             <p class="create-text">Password</p> 
                             <!-- use imput tpye password -->
-                            <input type="text" class="create-text-input">
-                        </div>
-                        <div class="create-ask-container" id="create-confirm-password">
-                            <p class="create-text">Password</p>
                             <input type="text" class="create-text-input" id="create-password-input">
                         </div>
+                        <!-- <div class="create-ask-container" id="create-confirm-password">
+                            <p class="create-text">Password</p>
+                            <input type="text" class="create-text-input" id="create-password-input">
+                        </div> -->
                         <button class="slideout-button clickable" id="create-gen-password">Generate password</button>
                         <input type="text" class="create-text-input create-notes" id="create-notes" placeholder="notes">
+                        <button class="slideout-button clickable" id="create-create-account">Create</button>
                     </div>
 
                     <div class="slideout-page hidden" id="sort-slideout">
@@ -294,30 +295,31 @@
                     <button class="search-bar-button clickable" id="search-button">go</button>
                 </div>
                 <div class="display-accounts-container">
-                    <div class="account-instance-container">
-                        <div class="account-inst-img-container">
-                            <img src="website.jpg" alt="Photo">
-                        </div>
-                        <div class="account-inst-text-container">
-                            <p class="inst-text" id="inst-website">www.website.com</p>
-                            <p class="inst-text" id="inst-username">Username</p>
-                            <p class="inst-text" id="inst-password">********</p>
-                        </div>
-                        <div class="account-inst-button-container">
-                            <button class="acc-inst-button clickable" id="acc-inst-edit-button">edit</button>
-                            <button class="acc-inst-button clickable" id="acc-inst-delete-button">delete</button>
-                        </div>
-                    </div>
+                    {{#each accounts}}
+                        {{>accInstance}}
+                    {{/each}}
                 </div>
                 <div class="account-edit-container hidden">
                     <div class="edit-sub-container edit-website">
                         <img class="edit-website-img" src="website.jpg" alt="photo">
-                        <input class="edit-website-url" id="edit-url" type="text">
+                        <div class="edit-text-imput-container">
+                            <p class="edit-container-text">Website Url</p>
+                            <input class="edit-website-url" id="edit-user-url" type="text">
+                        </div>
                     </div>
                     <div class="edit-sub-container edit-userinfo">
-                        <input class="edit-userinfo-input" id="edit-user-username" type="text">
-                        <input class="edit-userinfo-input" id="edit-user-password" type="text">
-                        <input class="edit-userinfo-input" id="edit-user-email" type="text">
+                        <div class="edit-text-imput-container">
+                            <p class="edit-container-text">Username</p>
+                            <input class="edit-userinfo-input" id="edit-user-username" type="text">
+                        </div>
+                        <div class="edit-text-imput-container">
+                            <p class="edit-container-text">Password</p>
+                            <input class="edit-userinfo-input" id="edit-user-password" type="text">
+                        </div>
+                        <div class="edit-text-imput-container">
+                            <p class="edit-container-text">Email</p>
+                            <input class="edit-userinfo-input" id="edit-user-email" type="text">
+                        </div>
                     </div>
                     <div class="edit-sub-container edit-fields">
                         <h3 class="edit-header">Fields</h3>
@@ -345,11 +347,12 @@
                     <div class="edit-subcontainer edit-end">
                         <div class="edit-notes-container">
                             <h3 class="edit-header">Notes</h3>
-                            <input class="edit-notes" type="text" placeholder="None">
+                            <input class="edit-user-notes" id="edit-user-notes" type="text" placeholder="None">
                         </div>
-                        <button class="edit-button">Save</button>
+                        <button class="edit-button" id="edit-save">Save</button>
                     </div>
                     <p class="edit-close clickable">X</p>
+                    <p class="hidden invisable" id="edit-id"></p>
                 </div>
             </div>
         </main>

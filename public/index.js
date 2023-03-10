@@ -18,6 +18,58 @@ function toggleCreateSlideOut(event) {
     }
 }
 
+function generatePassword() {
+    fetch('/generatePassword', {
+        method: 'GET'
+      })
+      .then(function (res) {
+        if (res.status === 200) {
+          res.text().then(function (text) {
+            document.getElementById("create-password-input").value = text
+          })
+        } else {
+          console.log("error: " + res.status)
+        }
+      }).catch(function (err) {
+        console.log("error: " + err)
+      })
+}
+
+function createAccount() {
+    var address = document.getElementById("create-address-input")
+    var username = document.getElementById("create-username-input")
+    var password = document.getElementById("create-password-input")
+    var notes = document.getElementById("create-notes")
+    if (address.value === "" || username.value === "" || password.value === "") {
+        alert("Address, username and password fields must be filled out")
+    } else {
+        fetch('/addAccInfo', {
+            method: 'POST',
+            body: JSON.stringify({
+                address: address.value,
+                imgurl: "website.jpg",
+                username: username.value,
+                password: password.value,
+                notes: notes.value
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (res) {
+            if (res.status != 200) {
+                console.log("error: " + res.status)
+            } else {
+                address.value = ""
+                username.value = ""
+                password.value = ""
+                notes.value = ""
+            }
+        }).catch(function (err) {
+            console.log("error: " + err)
+        })
+    }
+}
+
 function toggleSortSlideOut(event) {
     var Slideout = document.getElementById("sort-slideout")
     if (Slideout.classList.contains("hidden")) {
@@ -48,6 +100,21 @@ function toggleSettingsSlideOut(event) {
     }
 }
 
+function deactivateAccount() {
+    // confirm
+    fetch("/deactivate", {
+        method: 'POST'
+    }).then(function (res) {
+        if (res.status != 200) {
+            console.log("error: ", res.status)
+        } else {
+            location.href = location.href
+        }
+    }).catch(function (err) {
+        console.log("error: ", err)
+    })
+}
+
 function toggleSupportSlideOut(event) {
     var Slideout = document.getElementById("support-slideout")
     if (Slideout.classList.contains("hidden")) {
@@ -67,13 +134,99 @@ function closeOtherSlides(currSlide) {
     }
 }
 
+function accountDelete(e) {
+    var textContainer = e.target.parentNode.parentNode
+    var id = textContainer.childNodes[7].textContainer
+    fetch("/accInstDelete", {
+        method: 'POST',
+        body: JSON.stringify({
+            id: id
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (res) {
+        if (res.status != 200) {
+            console.log("error: ", res.status)
+        } else {
+            location.href = location.href
+        }
+    }).catch(function (err) {
+        console.log("error: ", err)
+    })
+}
+
+function openAccountEdit(e) {
+    var accountEditContainer = document.getElementsByClassName("account-edit-container")[0]
+    accountEditContainer.classList.remove("hidden")
+    var textContainer = e.target.parentNode.parentNode
+    var id = textContainer.childNodes[7].textContent
+
+    fetch('/getAccountData', {
+        method: 'POST',
+        body: JSON.stringify({
+            id: id
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(function (res) {
+        if (res.status != 200) {
+            console.log("error: " + res.status)
+        } else {
+            res.json().then(function (accData) {
+                document.getElementById("edit-user-url").value = accData.address
+                document.getElementById("edit-user-username").value = accData.username
+                document.getElementById("edit-user-password").value = accData.password
+                document.getElementById("edit-user-email").value = accData.email
+                document.getElementById("edit-user-notes").value = accData.notes
+                document.getElementById("edit-id").textContent = accData.id
+            })
+        }
+    }).catch(function (err) {
+        console.log("error: " + err)
+    })
+}
+
 function closeAccountEdit() {
     accountEditContainer = document.getElementsByClassName("account-edit-container")[0]
     accountEditContainer.classList.add("hidden")
-    document.getElementById("edit-url").value = "www.website.com"
-    document.getElementById("edit-user-username").value = "Username"
-    document.getElementById("edit-user-password").value = "Password"
-    document.getElementById("edit-user-email").value = "email@gmail.com"
+}
+
+function saveAccountEdit() {
+    var address = document.getElementById("edit-user-url").value
+    var username = document.getElementById("edit-user-username").value
+    var password = document.getElementById("edit-user-password").value
+    var email = document.getElementById("edit-user-email").value
+    var notes = document.getElementById("edit-user-notes").value
+    var id = document.getElementById("edit-id").textContent
+
+    fetch('/saveAccInfo', {
+        method: 'POST',
+        body: JSON.stringify({
+            address: address,
+            // imgurl: "website.jpg",
+            username: username,
+            password: password,
+            email: email,
+            notes: notes,
+            id: id
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (res) {
+        if (res.status != 200) {
+            console.log("error: " + res.status)
+        } else {
+            console.log("refreshing")
+            location.href = location.href
+        }
+    }).catch(function (err) {
+        console.log("error: " + err)
+        console.error(err)
+    })
 }
 
 window.onload = function() {
@@ -92,10 +245,13 @@ window.onload = function() {
     var settingsSideButton = document.getElementById("settings-item")
     settingsSideButton.addEventListener("click", toggleSettingsSlideOut)
 
-    // var supportSideButton = document.getElementById("support-item")
-    // supportSideButton.addEventListener("click", function() {
-    //     window.open("https://www.passwordmanager/support", "_blank")
-    // })
+    var deactivateButton = document.getElementById("settings-deactivate")
+    deactivateButton.addEventListener("click", deactivateAccount)
+
+    var supportSideButton = document.getElementById("support-item")
+    supportSideButton.addEventListener("click", function() {
+        window.open("https://www.passwordmanager/support", "_blank")
+    })
     
     var clearSearchButton = document.getElementById("clear-search-button")
     clearSearchButton.addEventListener("click", function() {
@@ -105,35 +261,27 @@ window.onload = function() {
 
     var editClose = document.getElementsByClassName("edit-close")[0]
     editClose.addEventListener("click", closeAccountEdit)
+
+    var editSave = document.getElementById("edit-save")
+    editSave.addEventListener("click", saveAccountEdit)
+
+    
     var revertButton = document.getElementById("edit-revert")
     revertButton.addEventListener("click", closeAccountEdit)
 
-    var accInstEditButton = document.getElementById("acc-inst-edit-button")
-    accInstEditButton.addEventListener("click", function() {
-        var accountEditContainer = document.getElementsByClassName("account-edit-container")[0]
-        accountEditContainer.classList.remove("hidden")
-    })
+    var accInstEditButtons = document.getElementsByClassName("acc-inst-edit-button")
+    for (var i = 0; i < accInstEditButtons.length; i++) {
+        accInstEditButtons[i].addEventListener("click", openAccountEdit)
+    }
 
-    document.getElementById("edit-url").value = "www.website.com"
-    document.getElementById("edit-user-username").value = "Username"
-    document.getElementById("edit-user-password").value = "Password"
-    document.getElementById("edit-user-email").value = "email@gmail.com"
+    var accInstDeleteButtons = document.getElementsByClassName("acc-inst-delete-button")
+    for (var i = 0; i < accInstDeleteButtons.length; i++) {
+        accInstDeleteButtons[i].addEventListener("click", accountDelete)
+    }
 
-    genPasswordButton = document.getElementById("create-gen-password")
-    genPasswordButton.addEventListener("click", function() {
-        fetch('/generate_password', {
-            method: 'GET'
-          })
-          .then(function (res) {
-            if (res.status === 200) {
-              res.text().then(function (text) {
-                document.getElementById("create-password-input").value = text
-              })
-            } else {
-              console.log("error: " + res.status)
-            }
-          }).catch(function (err) {
-            console.log("error: " + err)
-          })
-    })
+    var genPasswordButton = document.getElementById("create-gen-password")
+    genPasswordButton.addEventListener("click", generatePassword)
+
+    var createAccountButton = document.getElementById("create-create-account")
+    createAccountButton.addEventListener("click", createAccount)
 }
