@@ -10,11 +10,18 @@ function toggleAccountSlideOut(event) {
 
 function toggleCreateSlideOut(event) {
     var Slideout = document.getElementById("create-slideout")
+    var createPrompt = document.getElementsByClassName("prompt-create-container")[0]
     if (Slideout.classList.contains("hidden")) {
         Slideout.classList.remove("hidden")
+        if (createPrompt) {
+            createPrompt.classList.add("hidden")
+        }
         closeOtherSlides("create-slideout")
     } else {
         Slideout.classList.add("hidden")
+        if (createPrompt) {
+            createPrompt.classList.remove("hidden")
+        }
     }
 }
 
@@ -39,6 +46,7 @@ function createAccount() {
     var address = document.getElementById("create-address-input")
     var username = document.getElementById("create-username-input")
     var password = document.getElementById("create-password-input")
+    var email = document.getElementById("create-email-input")
     var notes = document.getElementById("create-notes")
     if (address.value === "" || username.value === "" || password.value === "") {
         alert("Address, username and password fields must be filled out")
@@ -50,6 +58,7 @@ function createAccount() {
                 imgurl: "website.jpg",
                 username: username.value,
                 password: password.value,
+                email: email.value,
                 notes: notes.value
             }),
             headers: {
@@ -62,6 +71,7 @@ function createAccount() {
                 address.value = ""
                 username.value = ""
                 password.value = ""
+                email.value = ""
                 notes.value = ""
             }
         }).catch(function (err) {
@@ -126,6 +136,10 @@ function toggleSupportSlideOut(event) {
 }
 
 function closeOtherSlides(currSlide) {
+    var createPrompt = document.getElementsByClassName("prompt-create-container")[0]
+    if (currSlide != "create-slideout" && createPrompt) {
+        createPrompt.classList.remove("hidden")
+    }
     var Slideouts = document.getElementsByClassName("slideout-page")
     for (var i = 0; i < Slideouts.length; i++) {
         if(Slideouts[i].id != currSlide) {
@@ -201,6 +215,10 @@ function saveAccountEdit() {
     var email = document.getElementById("edit-user-email").value
     var notes = document.getElementById("edit-user-notes").value
     var id = document.getElementById("edit-id").textContent
+    var displayPW = ""
+    for (var i = 0; i < password.length; i++) {
+        displayPW += "*"
+    }
 
     fetch('/saveAccInfo', {
         method: 'POST',
@@ -209,6 +227,7 @@ function saveAccountEdit() {
             // imgurl: "website.jpg",
             username: username,
             password: password,
+            displayPW: displayPW,
             email: email,
             notes: notes,
             id: id
@@ -284,4 +303,9 @@ window.onload = function() {
 
     var createAccountButton = document.getElementById("create-create-account")
     createAccountButton.addEventListener("click", createAccount)
+
+    var refreshButton = document.getElementById("create-refresh-accounts")
+    refreshButton.addEventListener("click", function() {
+        location.href = location.href
+    })
 }

@@ -81,7 +81,6 @@ button:hover {
 .slideout-page {
     width: 300px;
     height: 635px;
-    /* height: 98%; */
     background-color: whitesmoke;
     border: solid black 1px;
     padding-top: 10px;
@@ -98,13 +97,6 @@ button:hover {
 .slideout-text {
     align-self: center;
 }
-
-/* .acc-slideout-img {
-    align-self: center;
-    width: 150px;
-    height: 150px;
-    border-radius: 10px;
-} */
 
 .slideout-profile-subcontainer {
     align-self: center;
@@ -128,9 +120,16 @@ button:hover {
     align-self: center;
 }
 
+.create-slideout {
+    overflow-y: scroll;
+    display: block;
+}
+
 .create-ask-container {
-    align-self: center;
-    margin-bottom: 12px;
+    /* margin-bottom: 10px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .create-gen-password {
@@ -142,10 +141,14 @@ button:hover {
     margin-bottom: 4px;
 }
 
+.create-text-input {
+    margin-bottom: 10px;
+}
+
 .create-notes {
-    height: 20%;
-    margin: 25px;
-    margin-top: 0px;
+    height: 100px;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .create-notes::placeholder {
@@ -155,16 +158,12 @@ button:hover {
 
 .slideout-image-container {
     align-self: center;
-    /* height: 150px;
-    width: 150px;
-    border-radius: 10px;
-    border: black solid 1px; */
     display: flex;
 }
 
 .slideout-image {
-    max-height: 150px;
-    max-width: 150px;
+    max-height: 130px;
+    max-width: 130px;
     border-radius: 10px;
     border: black solid 1px;
     align-self: center;
@@ -206,10 +205,6 @@ button:hover {
     margin-bottom: 5px;
     margin-top: 10px;
 }
-
-/* .cust-indv-add-container {
-    margin-bottom: 10px;
-} */
 
 .cust-input-bar-container {
     margin-bottom: 10px;
@@ -303,6 +298,29 @@ button:hover {
     border-left-width: 0px;
     border-right-width: 0px;
     font-size: larger;
+}
+
+.display-accounts-container {
+    overflow-y: scroll;
+    height: 617px;
+}
+
+.prompt-create-container {
+    width: 190px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 75px;
+}
+
+.prompt-create-text {
+    text-align: center;
+    margin: 0px;
+}
+
+.prompt-create-image {
+    max-width: 165px;
+    align-self: center;
+    margin-top: 5px;
 }
 
 .account-instance-container {
@@ -430,13 +448,14 @@ button:hover {
     width: 150px;
 }
 
-.edit-notes {
-    height: 100px;
+.edit-user-notes {
+    height: 96px;
+    margin-top: 4px;
 }
 
-.edit-notes::placeholder {
+.edit-user-notes::placeholder {
     position: relative;
-    top: -42px;
+    top: -41px;
 }
 
 .edit-button {

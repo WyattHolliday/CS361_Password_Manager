@@ -74,7 +74,7 @@
                         <button class="slideout-button clickable">Delete</button>
                     </div>
 
-                    <div class="slideout-page hidden" id="create-slideout">
+                    <div class="slideout-page hidden create-slideout" id="create-slideout">
                         <div class="create-ask-container" id="create-address">
                             <p class="create-text">Website Address</p>
                             <input type="text" class="create-text-input" id="create-address-input">
@@ -90,17 +90,22 @@
                             <input type="text" class="create-text-input" id="create-username-input">
                         </div>
                         <div class="create-ask-container" id="create-password">
-                            <p class="create-text">Password</p> 
-                            <!-- use imput tpye password -->
-                            <input type="text" class="create-text-input" id="create-password-input">
-                        </div>
-                        <!-- <div class="create-ask-container" id="create-confirm-password">
                             <p class="create-text">Password</p>
                             <input type="text" class="create-text-input" id="create-password-input">
-                        </div> -->
-                        <button class="slideout-button clickable" id="create-gen-password">Generate password</button>
-                        <input type="text" class="create-text-input create-notes" id="create-notes" placeholder="notes">
-                        <button class="slideout-button clickable" id="create-create-account">Create</button>
+                            <button class="slideout-button clickable" id="create-gen-password">Generate password</button>
+                        </div>
+                        <div class="create-ask-container" id="create-username">
+                            <p class="create-text">Email</p>
+                            <input type="text" class="create-text-input" id="create-email-input">
+                        </div>
+                        <div class="create-ask-container">
+                            <p class="create-text">Notes</p>
+                            <input type="text" class="create-text-input create-notes" id="create-notes">
+                        </div>
+                        <div class="create-ask-container">
+                            <button class="slideout-button clickable" id="create-create-account">Create</button>
+                            <button class="slideout-button clickable" id="create-refresh-accounts">Refresh</button>
+                        </div>
                     </div>
 
                     <div class="slideout-page hidden" id="sort-slideout">
@@ -295,6 +300,14 @@
                     <button class="search-bar-button clickable" id="search-button">go</button>
                 </div>
                 <div class="display-accounts-container">
+                    {{#if count}}
+                    {{else}}
+                        <div class="prompt-create-container">
+                            <h4 class="prompt-create-text">Click create password to enter your first account!</h4> 
+                            <img class="prompt-create-image" src="arrow.png" alt="Pointing Arrow">
+                        </div>
+                    {{/if}}
+
                     {{#each accounts}}
                         {{>accInstance}}
                     {{/each}}

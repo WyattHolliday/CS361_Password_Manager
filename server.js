@@ -19,7 +19,8 @@ var userdata = require('./userdata.json')
 
 app.get("/passwordmanager", function(req, res) {
     res.status(200).render('index', {
-    accounts: userdata
+    accounts: userdata,
+    count: userdata.length
     })
   })
 
@@ -56,13 +57,19 @@ app.post("/addAccInfo", function(req, res) {
     var imgurl = req.body.imgurl
     var username = req.body.username
     var password = req.body.password
+    var email = req.body.email
     var notes = req.body.notes
+    var displayPW = ""
+    for (var i = 0; i < password.length; i++) {
+        displayPW += "*"
+    }
     userdata.push({
         address: address,
         imgurl: imgurl,
         username: username,
         password: password,
-        email: "",
+        displayPW: displayPW,
+        email: email,
         notes: notes,
         id: userdata.length
     })
@@ -95,6 +102,7 @@ app.post("/saveAccInfo", function(req, res) {
     userdata[id].address = req.body.address
     userdata[id].username = req.body.username
     userdata[id].password = req.body.password
+    userdata[id].displayPW = req.body.displayPW
     userdata[id].email = req.body.email
     userdata[id].notes = req.body.notes
     fs.writeFile('./userdata.json', JSON.stringify(userdata, null, 2), 
