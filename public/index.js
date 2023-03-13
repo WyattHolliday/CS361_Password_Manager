@@ -51,7 +51,7 @@ function createAccount() {
     if (address.value === "" || username.value === "" || password.value === "") {
         alert("Address, username and password fields must be filled out")
     } else {
-        fetch('/addAccInfo', {
+        fetch('/createAcc', {
             method: 'POST',
             body: JSON.stringify({
                 address: address.value,
@@ -108,6 +108,33 @@ function toggleSettingsSlideOut(event) {
     } else {
         Slideout.classList.add("hidden")
     }
+}
+
+function changeSettings(e) {
+    var editsCanSaveSelector = document.getElementsByClassName("settings-edits-ammount")[0]
+    var editsCanSave
+    for (var i = 0; i < editsCanSaveSelector.length; i++) {
+        if (editsCanSaveSelector[i].selected === true) {
+            editsCanSave = Number(editsCanSaveSelector[i].text)
+        }
+    }
+    fetch("/updateSettings", {
+        method:'POST',
+        body: JSON.stringify({
+            editsCanSave: editsCanSave
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (res) {
+        if (res.status != 200) {
+            console.log("error: ", res.status)
+        } else {
+            location.href = location.href
+        }
+    }).catch(function (err) {
+        console.log("error: ", err)
+    })
 }
 
 function deactivateAccount() {
@@ -208,6 +235,63 @@ function closeAccountEdit() {
     accountEditContainer.classList.add("hidden")
 }
 
+function undoAccount(e) {
+    var id = e.target.parentNode.parentNode.parentNode.childNodes[13].textContent
+    fetch("/undoAcc", {
+        method: 'POST',
+        body: JSON.stringify({
+            id: id
+            // editsCanSave: editsCanSave
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (res) {
+        if (res.status != 200) {
+            console.log("error: ", res.status)
+        } else {
+            res.text().then(function (text) {
+                if (text === "Cannot undo further") {
+                    alert(text)
+                } else {
+                    location.href = location.href
+                }
+            })
+        }
+    }).catch(function (err) {
+        console.log("error: ", err)
+    })
+}
+
+function redoAccount(e) {
+    var id = e.target.parentNode.parentNode.parentNode.childNodes[13].textContent
+    var editsCanSaveSelector = document.getElementsByClassName("settings-edits-ammount")[0]
+    fetch("/redoAcc", {
+        method: 'POST',
+        body: JSON.stringify({
+            id: id
+            // editsCanSave: editsCanSave
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (res) {
+        if (res.status != 200) {
+            console.log("error: ", res.status)
+        } else {
+            res.text().then(function (text) {
+                if (text === "Cannot redo further") {
+                    alert(text)
+                } else {
+                    location.href = location.href
+                }
+            })
+        }
+    }).catch(function (err) {
+        console.log("error: ", err)
+    })
+}
+
 function saveAccountEdit() {
     var address = document.getElementById("edit-user-url").value
     var username = document.getElementById("edit-user-username").value
@@ -215,6 +299,13 @@ function saveAccountEdit() {
     var email = document.getElementById("edit-user-email").value
     var notes = document.getElementById("edit-user-notes").value
     var id = document.getElementById("edit-id").textContent
+    var editsCanSaveSelector = document.getElementsByClassName("settings-edits-ammount")[0]
+    var editsCanSave
+    for (var i = 0; i < editsCanSaveSelector.length; i++) {
+        if (editsCanSaveSelector[i].selected === true) {
+            editsCanSave = Number(editsCanSaveSelector[i].text)
+        }
+    }
     var displayPW = ""
     for (var i = 0; i < password.length; i++) {
         displayPW += "*"
@@ -230,7 +321,8 @@ function saveAccountEdit() {
             displayPW: displayPW,
             email: email,
             notes: notes,
-            id: id
+            id: id,
+            editsCanSave: editsCanSave
         }),
         headers: {
             "Content-Type": "application/json"
@@ -239,7 +331,6 @@ function saveAccountEdit() {
         if (res.status != 200) {
             console.log("error: " + res.status)
         } else {
-            console.log("refreshing")
             location.href = location.href
         }
     }).catch(function (err) {
@@ -264,6 +355,12 @@ window.onload = function() {
     var settingsSideButton = document.getElementById("settings-item")
     settingsSideButton.addEventListener("click", toggleSettingsSlideOut)
 
+    var settingsApplyChanges = document.getElementById("setttings-change")
+    settingsApplyChanges.addEventListener("click", changeSettings)
+
+    var settingsCancel = document.getElementById("settings-cancel")
+    settingsCancel.addEventListener("click", toggleSettingsSlideOut)
+
     var deactivateButton = document.getElementById("settings-deactivate")
     deactivateButton.addEventListener("click", deactivateAccount)
 
@@ -284,9 +381,21 @@ window.onload = function() {
     var editSave = document.getElementById("edit-save")
     editSave.addEventListener("click", saveAccountEdit)
 
+    var editCancel = document.getElementById("settings-cancel")
+    editCancel.addEventListener("click", function() {
+        location.href = location.href
+    })
+
+    var editExit = document.getElementById("edit-exit")
+    editExit.addEventListener("click", function() {
+        location.href = location.href
+    })
     
-    var revertButton = document.getElementById("edit-revert")
-    revertButton.addEventListener("click", closeAccountEdit)
+    var undoButton = document.getElementById("edit-revert")
+    undoButton.addEventListener("click", undoAccount)
+
+    var redoButton = document.getElementById("edit-rerevert")
+    redoButton.addEventListener("click", redoAccount)
 
     var accInstEditButtons = document.getElementsByClassName("acc-inst-edit-button")
     for (var i = 0; i < accInstEditButtons.length; i++) {

@@ -273,10 +273,30 @@
                             <h3 class="settings-text">Save last</h3>
                             <div class="settings-dropdown-container">
                                 <select name="settings-edits-ammount" class="settings-select settings-edits-ammount clickable">
-                                    <option>5</option>
-                                    <option selected value="">10</option>
-                                    <option>20</option>
-                                    <option>30</option>
+                                    {{#if edits5}}
+                                        <option selected value="">5</option>
+                                        <option>10</option>
+                                        <option>20</option>
+                                        <option>30</option>
+                                    {{/if}}
+                                    {{#if edits10}}
+                                        <option>5</option>
+                                        <option selected value="">10</option>
+                                        <option>20</option>
+                                        <option>30</option>
+                                    {{/if}}
+                                    {{#if edits20}}
+                                        <option>5</option>
+                                        <option>10</option>
+                                        <option selected value="">20</option>
+                                        <option>30</option>
+                                    {{/if}}
+                                    {{#if edits30}}
+                                        <option>5</option>
+                                        <option>10</option>
+                                        <option>20</option>
+                                        <option selected value="">30</option>
+                                    {{/if}}
                                 </select>
                                 <h3 class="settings-sub-text">edits</h3>
                             </div>
@@ -355,7 +375,10 @@
                                 </select>
                             </div>
                         </div>
-                        <button class="edit-button clickable" id="edit-revert">Undo</button>
+                        <div class="edit-button-container">
+                            <button class="edit-button clickable" id="edit-revert">Undo</button>
+                            <button class="edit-button clickable" id="edit-rerevert">Redo</button>
+                        </div>
                     </div>
                     <div class="edit-subcontainer edit-end">
                         <div class="edit-notes-container">
@@ -363,6 +386,7 @@
                             <input class="edit-user-notes" id="edit-user-notes" type="text" placeholder="None">
                         </div>
                         <button class="edit-button" id="edit-save">Save</button>
+                        <button class="edit-button" id="edit-exit">Exit</button>
                     </div>
                     <p class="edit-close clickable">X</p>
                     <p class="hidden invisable" id="edit-id"></p>

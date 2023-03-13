@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "user": {
+      "username": "Placeholder",
+      "password": "Placeholder",
+      "id": 0,
+      "settings": {
+        "activeTime": "Placeholder",
+        "deletedAccKept": "Placeholder",
+        "editsCanSave": 10
+      }
+    },
+    "accounts": []
+  }
+]
