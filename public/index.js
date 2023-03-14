@@ -1,4 +1,4 @@
-function toggleAccountSlideOut(event) {
+function toggleAccountSlideOut() {
     var Slideout = document.getElementById("account-slideout")
     if (Slideout.classList.contains("hidden")) {
         Slideout.classList.remove("hidden")
@@ -8,12 +8,13 @@ function toggleAccountSlideOut(event) {
     }
 }
 
-function toggleCreateSlideOut(event) {
+// Create functions
+function toggleCreateSlideOut() {
     var Slideout = document.getElementById("create-slideout")
     var createPrompt = document.getElementsByClassName("prompt-create-container")[0]
-    if (Slideout.classList.contains("hidden")) {
+    if (Slideout.classList.contains("hidden")) { 
         Slideout.classList.remove("hidden")
-        if (createPrompt) {
+        if (createPrompt) { // if prompt exits hide it otherwise unhide it
             createPrompt.classList.add("hidden")
         }
         closeOtherSlides("create-slideout")
@@ -31,7 +32,7 @@ function generatePassword() {
       })
       .then(function (res) {
         if (res.status === 200) {
-          res.text().then(function (text) {
+          res.text().then(function (text) { // put retrived password into element
             document.getElementById("create-password-input").value = text
           })
         } else {
@@ -42,6 +43,9 @@ function generatePassword() {
       })
 }
 
+// amount of acounts created
+var totalAccounts = document.getElementsByClassName("account-instance-container").length // fetch instead
+
 function createAccount() {
     var address = document.getElementById("create-address-input")
     var username = document.getElementById("create-username-input")
@@ -51,7 +55,8 @@ function createAccount() {
     if (address.value === "" || username.value === "" || password.value === "") {
         alert("Address, username and password fields must be filled out")
     } else {
-        fetch('/createAcc', {
+        totalAccounts++
+        fetch("/createAcc", { // send account info to server
             method: 'POST',
             body: JSON.stringify({
                 address: address.value,
@@ -59,7 +64,8 @@ function createAccount() {
                 username: username.value,
                 password: password.value,
                 email: email.value,
-                notes: notes.value
+                notes: notes.value,
+                totalAccounts: totalAccounts
             }),
             headers: {
                 "Content-Type": "application/json"
@@ -67,7 +73,7 @@ function createAccount() {
         }).then(function (res) {
             if (res.status != 200) {
                 console.log("error: " + res.status)
-            } else {
+            } else { // set all imputs blank
                 address.value = ""
                 username.value = ""
                 password.value = ""
@@ -80,7 +86,8 @@ function createAccount() {
     }
 }
 
-function toggleSortSlideOut(event) {
+// Sort functions
+function toggleSortSlideOut() {
     var Slideout = document.getElementById("sort-slideout")
     if (Slideout.classList.contains("hidden")) {
         Slideout.classList.remove("hidden")
@@ -90,7 +97,30 @@ function toggleSortSlideOut(event) {
     }
 }
 
-function toggleCustomizeSlideOut(event) {
+function changeSort() { // UNFINISHED
+    var category = document.querySelectorAll("input[name='sort-checkboxes']:checked")[0]
+    var type = category.nextSibling.nextSibling.textContent
+    fetch("/sort", {
+        method: 'POST',
+        body: JSON.stringify({
+            type: type
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (res) {
+        if (res.status != 200) {
+            console.log("error: " + res.status)
+        } else {
+            location.href = location.href
+        }
+    }).catch(function (err) {
+        console.log("error: " + err)
+    })
+}
+
+// Customize functions
+function toggleCustomizeSlideOut() {
     var Slideout = document.getElementById("customize-slideout")
     if (Slideout.classList.contains("hidden")) {
         Slideout.classList.remove("hidden")
@@ -100,7 +130,8 @@ function toggleCustomizeSlideOut(event) {
     }
 }
 
-function toggleSettingsSlideOut(event) {
+// Settings functions
+function toggleSettingsSlideOut() {
     var Slideout = document.getElementById("settings-slideout")
     if (Slideout.classList.contains("hidden")) {
         Slideout.classList.remove("hidden")
@@ -110,15 +141,15 @@ function toggleSettingsSlideOut(event) {
     }
 }
 
-function changeSettings(e) {
+function changeSettings() {
     var editsCanSaveSelector = document.getElementsByClassName("settings-edits-ammount")[0]
     var editsCanSave
     for (var i = 0; i < editsCanSaveSelector.length; i++) {
         if (editsCanSaveSelector[i].selected === true) {
-            editsCanSave = Number(editsCanSaveSelector[i].text)
+            editsCanSave = Number(editsCanSaveSelector[i].text) // Find user imputed edits to save
         }
     }
-    fetch("/updateSettings", {
+    fetch("/updateSettings", { // Send to server
         method:'POST',
         body: JSON.stringify({
             editsCanSave: editsCanSave
@@ -130,7 +161,7 @@ function changeSettings(e) {
         if (res.status != 200) {
             console.log("error: ", res.status)
         } else {
-            location.href = location.href
+            location.href = location.href // refresh page
         }
     }).catch(function (err) {
         console.log("error: ", err)
@@ -138,21 +169,22 @@ function changeSettings(e) {
 }
 
 function deactivateAccount() {
-    // confirm
-    fetch("/deactivate", {
+    // confirm before deactivation?
+    fetch("/deactivate", { // tell server to delete data
         method: 'POST'
     }).then(function (res) {
         if (res.status != 200) {
             console.log("error: ", res.status)
         } else {
-            location.href = location.href
+            location.href = location.href // refresh
         }
     }).catch(function (err) {
         console.log("error: ", err)
     })
 }
 
-function toggleSupportSlideOut(event) {
+// Support functions
+function toggleSupportSlideOut() {
     var Slideout = document.getElementById("support-slideout")
     if (Slideout.classList.contains("hidden")) {
         Slideout.classList.remove("hidden")
@@ -162,23 +194,28 @@ function toggleSupportSlideOut(event) {
     }
 }
 
+// When opening a slide ensures only it and prompt are visable
 function closeOtherSlides(currSlide) {
     var createPrompt = document.getElementsByClassName("prompt-create-container")[0]
-    if (currSlide != "create-slideout" && createPrompt) {
+    if (currSlide != "create-slideout" && createPrompt) { // if currently opening create and prompt exists, unhide
         createPrompt.classList.remove("hidden")
     }
     var Slideouts = document.getElementsByClassName("slideout-page")
     for (var i = 0; i < Slideouts.length; i++) {
         if(Slideouts[i].id != currSlide) {
-            Slideouts[i].classList.add("hidden")
+            Slideouts[i].classList.add("hidden") // hide all other slides
         }
     }
 }
 
+function getAccountIDFromMain(e) {
+    return e.target.parentNode.parentNode.childNodes[7].textContent
+}
+
+// Main page functions
 function accountDelete(e) {
-    var textContainer = e.target.parentNode.parentNode
-    var id = textContainer.childNodes[7].textContainer
-    fetch("/accInstDelete", {
+    var id = getAccountIDFromMain(e)
+    fetch("/accInstDelete", { // tell server which account to delete
         method: 'POST',
         body: JSON.stringify({
             id: id
@@ -190,20 +227,20 @@ function accountDelete(e) {
         if (res.status != 200) {
             console.log("error: ", res.status)
         } else {
-            location.href = location.href
+            location.href = location.href // refresh
         }
     }).catch(function (err) {
         console.log("error: ", err)
     })
 }
 
+// opens edit page
 function openAccountEdit(e) {
     var accountEditContainer = document.getElementsByClassName("account-edit-container")[0]
     accountEditContainer.classList.remove("hidden")
-    var textContainer = e.target.parentNode.parentNode
-    var id = textContainer.childNodes[7].textContent
+    var id = getAccountIDFromMain(e)
 
-    fetch('/getAccountData', {
+    fetch('/getAccountData', { // tell server which account to get data from
         method: 'POST',
         body: JSON.stringify({
             id: id
@@ -216,7 +253,7 @@ function openAccountEdit(e) {
         if (res.status != 200) {
             console.log("error: " + res.status)
         } else {
-            res.json().then(function (accData) {
+            res.json().then(function (accData) { // put data in page
                 document.getElementById("edit-user-url").value = accData.address
                 document.getElementById("edit-user-username").value = accData.username
                 document.getElementById("edit-user-password").value = accData.password
@@ -230,18 +267,23 @@ function openAccountEdit(e) {
     })
 }
 
+// hides edit page
 function closeAccountEdit() {
     accountEditContainer = document.getElementsByClassName("account-edit-container")[0]
     accountEditContainer.classList.add("hidden")
 }
 
+function getAccountIDFromEdit(e) {
+    return e.target.parentNode.parentNode.parentNode.childNodes[13].textContent
+}
+
+ // undo to previous iteration of account
 function undoAccount(e) {
-    var id = e.target.parentNode.parentNode.parentNode.childNodes[13].textContent
-    fetch("/undoAcc", {
+    var id = getAccountIDFromEdit(e)
+    fetch("/undoAcc", { // tell server which account to undo
         method: 'POST',
         body: JSON.stringify({
             id: id
-            // editsCanSave: editsCanSave
         }),
         headers: {
             "Content-Type": "application/json"
@@ -254,7 +296,7 @@ function undoAccount(e) {
                 if (text === "Cannot undo further") {
                     alert(text)
                 } else {
-                    location.href = location.href
+                    location.href = location.href // refresh page
                 }
             })
         }
@@ -263,14 +305,13 @@ function undoAccount(e) {
     })
 }
 
+// redo to previous iteration of account
 function redoAccount(e) {
-    var id = e.target.parentNode.parentNode.parentNode.childNodes[13].textContent
-    var editsCanSaveSelector = document.getElementsByClassName("settings-edits-ammount")[0]
-    fetch("/redoAcc", {
+    var id = getAccountIDFromEdit(e)
+    fetch("/redoAcc", { // tell server which account to undo
         method: 'POST',
         body: JSON.stringify({
             id: id
-            // editsCanSave: editsCanSave
         }),
         headers: {
             "Content-Type": "application/json"
@@ -283,7 +324,7 @@ function redoAccount(e) {
                 if (text === "Cannot redo further") {
                     alert(text)
                 } else {
-                    location.href = location.href
+                    location.href = location.href // refresh page
                 }
             })
         }
@@ -292,8 +333,9 @@ function redoAccount(e) {
     })
 }
 
+// saves account info to server
 function saveAccountEdit() {
-    var address = document.getElementById("edit-user-url").value
+    var address = document.getElementById("edit-user-url").value // get data
     var username = document.getElementById("edit-user-username").value
     var password = document.getElementById("edit-user-password").value
     var email = document.getElementById("edit-user-email").value
@@ -311,7 +353,7 @@ function saveAccountEdit() {
         displayPW += "*"
     }
 
-    fetch('/saveAccInfo', {
+    fetch('/saveAccInfo', { // save data
         method: 'POST',
         body: JSON.stringify({
             address: address,
@@ -335,11 +377,10 @@ function saveAccountEdit() {
         }
     }).catch(function (err) {
         console.log("error: " + err)
-        console.error(err)
     })
 }
 
-window.onload = function() {
+window.onload = function() { // add all event listers
     var accountSideButton = document.getElementById("account-item")
     accountSideButton.addEventListener("click", toggleAccountSlideOut)
 
@@ -348,6 +389,14 @@ window.onload = function() {
     
     var sortSideButton = document.getElementById("sort-item")
     sortSideButton.addEventListener("click", toggleSortSlideOut)
+
+    // var sortChange = document.getElementById("sort-change") Work on changeSort function
+    // sortChange.addEventListener("click", changeSort)
+
+    var sortCancel = document.getElementById("sort-cancel")
+    sortCancel.addEventListener("click", function() {
+        location.href = location.href
+    })
     
     var customizeSideButton = document.getElementById("customize-item")
     customizeSideButton.addEventListener("click", toggleCustomizeSlideOut)
@@ -366,7 +415,7 @@ window.onload = function() {
 
     var supportSideButton = document.getElementById("support-item")
     supportSideButton.addEventListener("click", function() {
-        window.open("https://www.passwordmanager/support", "_blank")
+        window.open("https://www.passwordmanager/support", "_blank") // open support page that does not exist
     })
     
     var clearSearchButton = document.getElementById("clear-search-button")
@@ -387,9 +436,7 @@ window.onload = function() {
     })
 
     var editExit = document.getElementById("edit-exit")
-    editExit.addEventListener("click", function() {
-        location.href = location.href
-    })
+    editExit.addEventListener("click", closeAccountEdit)
     
     var undoButton = document.getElementById("edit-revert")
     undoButton.addEventListener("click", undoAccount)
@@ -398,12 +445,12 @@ window.onload = function() {
     redoButton.addEventListener("click", redoAccount)
 
     var accInstEditButtons = document.getElementsByClassName("acc-inst-edit-button")
-    for (var i = 0; i < accInstEditButtons.length; i++) {
+    for (var i = 0; i < accInstEditButtons.length; i++) { // add edit account listeners to all accounts
         accInstEditButtons[i].addEventListener("click", openAccountEdit)
     }
 
     var accInstDeleteButtons = document.getElementsByClassName("acc-inst-delete-button")
-    for (var i = 0; i < accInstDeleteButtons.length; i++) {
+    for (var i = 0; i < accInstDeleteButtons.length; i++) { // add delete account listeners to all accounts
         accInstDeleteButtons[i].addEventListener("click", accountDelete)
     }
 
